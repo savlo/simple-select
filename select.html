@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Selection</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #8B0000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .container {
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 95%;
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            text-align: center;
+            color: #8B0000;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .gift-message {
+            text-align: center;
+            color: #333;
+            font-size: 20px;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            margin: 30px auto;
+            max-width: 80%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .show-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            justify-items: center;
+        }
+        .show-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #f8f8f8;
+            position: relative;
+        }
+        .show-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .thumbnail {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+        }
+        .show-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0 5px;
+            padding: 0 10px;
+        }
+        .show-date {
+            font-size: 14px;
+            color: #666;
+            margin: 0 0 10px;
+            padding: 0 10px;
+        }
+        .selected {
+            box-shadow: 0 0 25px rgba(139, 0, 0, 0.9);
+            transform: scale(1.08);
+        }
+        .selected::after {
+            content: "Selected";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #8B0000;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .star {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: gold;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: twinkle linear;
+        }
+        @keyframes twinkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1) rotate(180deg); opacity: 1; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+<div id="particles-js"></div>
+<div class="container">
+    <h1>Show Selection</h1>
+    <p class="gift-message">The gift contains a flight ticket and the show ticket, but I am sure we will find the right hotel together for that weekend in London</p>
+    <div class="show-container">
+        <div class="show-item" onclick="selectShow(this)">
+            <img src="https://images.ctfassets.net/6pezt69ih962/5vAjdywN3ADYedAokcKGqf/157485fc6bdb36cdbfbb452f8998a56f/HER051_TicketAgents_TTG_480_x_720.jpg?h=450&f=faces&fit=fill&fm=webp&q=90" alt="Disney's Hercules" class="thumbnail">
+            <p class="show-title">Disney's Hercules</p>
+            <p class="show-date">August - September</p>
+        </div>
+        <div class="show-item" onclick="selectShow(this)">
+            <img src="https://images.ctfassets.net/6pezt69ih962/1LDjWFwIBcfRSEXA4BkL8T/860fedcfedf0a467703e9afa4caa67b0/prod_1580719924849_HamPoster.jpg?h=450&f=faces&fit=fill&fm=webp&q=90" alt="Hamilton" class="thumbnail">
+            <p class="show-title">Hamilton</p>
+            <p class="show-date">May - August</p>
+        </div>
+        <div class="show-item" onclick="selectShow(this)">
+            <img src="https://images.ctfassets.net/6pezt69ih962/spO4dvQ2d27GnxYWBxnBF/63098b18838bc2603d38edbcecbd7b6e/PHA23_Q2_017_TTG_480x720_AW.jpg?h=450&f=faces&fit=fill&fm=webp&q=90" alt="The Phantom of the Opera" class="thumbnail">
+            <p class="show-title">The Phantom of the Opera</p>
+            <p class="show-date">May - September</p>
+        </div>
+        <div class="show-item" onclick="selectShow(this)">
+            <img src="https://images.ctfassets.net/6pezt69ih962/47DmmERqPjWVTLnJFvHdU8/f4604915fb85d06b86a82d5a9e37e389/MIS_TodayTix_480x720__1_.jpg?h=450&f=faces&fit=fill&fm=webp&q=90" alt="Les Misérables" class="thumbnail">
+            <p class="show-title">Les Misérables</p>
+            <p class="show-date">May - August</p>
+        </div>
+        <div class="show-item" onclick="selectShow(this)">
+            <img src="https://images.ctfassets.net/6pezt69ih962/2NWmVFe5Y6iYTLqPmIOWPG/a85be5d1aa5407f8a25988a5a4f8fdc6/Peaky_Blinders_480x720.png?h=540&f=faces&fit=fill&fm=webp&q=90" alt="Peaky Blinders: The Redemption of Thomas Shelby" class="thumbnail">
+            <p class="show-title">Peaky Blinders: The Redemption of Thomas Shelby</p>
+            <p class="show-date">5th August - 16th August</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function selectShow(element) {
+        const shows = document.querySelectorAll('.show-item');
+        shows.forEach(show => show.classList.remove('selected'));
+        element.classList.add('selected');
+
+        // Trigger confetti
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+
+        // Trigger star animation
+        createStars(element);
+    }
+
+    function createStars(element) {
+        const starCount = 20;
+        const container = document.querySelector('.container');
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+            container.appendChild(star);
+
+            setTimeout(() => {
+                star.remove();
+            }, 1500);
+        }
+    }
+
+    particlesJS("particles-js", {
+        "particles": {
+            "number": {
+                "value": 400,
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": "#ffffff"
+            },
+            "shape": {
+                "type": "circle",
+                "stroke": {
+                    "width": 0,
+                    "color": "#000000"
+                },
+                "polygon": {
+                    "nb_sides": 5
+                },
+                "image": {
+                    "src": "img/github.svg",
+                    "width": 100,
+                    "height": 100
+                }
+            },
+            "opacity": {
+                "value": 0.5,
+                "random": true,
+                "anim": {
+                    "enable": false,
+                    "speed": 1,
+                    "opacity_min": 0.1,
+                    "sync": false
+                }
+            },
+            "size": {
+                "value": 3,
+                "random": true,
+                "anim": {
+                    "enable": false,
+                    "speed": 40,
+                    "size_min": 0.1,
+                    "sync": false
+                }
+            },
+            "line_linked": {
+                "enable": false,
+                "distance": 500,
+                "color": "#ffffff",
+                "opacity": 0.4,
+                "width": 2
+            },
+            "move": {
+                "enable": true,
+                "speed": 2,
+                "direction": "bottom",
+                "random": false,
+                "straight": false,
+                "out_mode": "out",
+                "bounce": false,
+                "attract": {
+                    "enable": false,
+                    "rotateX": 600,
+                    "rotateY": 1200
+                }
+            }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": {
+                    "enable": false,
+                    "mode": "bubble"
+                },
+                "onclick": {
+                    "enable": false,
+                    "mode": "repulse"
+                },
+                "resize": true
+            },
+            "modes": {
+                "grab": {
+                    "distance": 400,
+                    "line_linked": {
+                        "opacity": 0.5
+                    }
+                },
+                "bubble": {
+                    "distance": 400,
+                    "size": 4,
+                    "duration": 0.3,
+                    "opacity": 1,
+                    "speed": 3
+                },
+                "repulse": {
+                    "distance": 200,
+                    "duration": 0.4
+                },
+                "push": {
+                    "particles_nb": 4
+                },
+                "remove": {
+                    "particles_nb": 2
+                }
+            }
+        },
+        "retina_detect": true
+    });
+</script>
+</body>
+</html>
